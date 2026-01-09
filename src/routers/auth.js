@@ -1,0 +1,21 @@
+import { Router } from "express";
+import { ctrlWrapper } from "../utils/ctrlWrapper.js";
+import {
+  loginController,
+  logoutController,
+  registerController,
+} from "../controllers/auth.js";
+import { validateBody } from "../middleware/validateBody.js";
+import { registerSchema, loginSchema } from "../validation/auth.js";
+
+const router = Router();
+
+router.post(
+  "/register",
+  validateBody(registerSchema),
+  ctrlWrapper(registerController)
+);
+router.post("/login", validateBody(loginSchema), ctrlWrapper(loginController));
+router.get("/logout", ctrlWrapper(logoutController));
+
+export default router;
