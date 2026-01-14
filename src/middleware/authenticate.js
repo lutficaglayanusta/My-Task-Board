@@ -21,11 +21,12 @@ export const authenticate = async (req, res, next) => {
   if (isExpired) {
     throw createHttpError(401, "Access token expired");
   }
-  const user = User.findOne({ _id: session.userId });
+  const user = await User.findOne({ _id: session.userId });
 
   if (!user) {
     throw createHttpError(401, "There is no user");
   }
+
   req.user = user;
   next();
 };
