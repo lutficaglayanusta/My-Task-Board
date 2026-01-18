@@ -6,10 +6,17 @@ export const addTaskService = async (payload) => {
   return task;
 };
 export const fetchTaskService = async (boardId) => {
-  const task = await Task.findOne({ boardId });
+  const task = await Task.find({ boardId });
 
   return task;
 };
 export const deleteTaskService = async (id) => {
   await Task.deleteOne({ _id: id });
+};
+export const updateTaskService = async (id, payload) => {
+  const task = await Task.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+    includeResultMetadata: true,
+  });
+  return task.value;
 };

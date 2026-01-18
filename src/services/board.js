@@ -13,3 +13,10 @@ export const fetchBoardService = async (id) => {
 export const deleteBoardService = async (id, boardId) => {
   await Board.deleteOne({ _id: boardId, userId: id });
 };
+export const updateBoardService = async (userId, id, payload) => {
+  const board = await Board.findOneAndUpdate({ _id: id, userId }, payload, {
+    new: true,
+    includeResultMetadata: true,
+  });
+  return board.value;
+};

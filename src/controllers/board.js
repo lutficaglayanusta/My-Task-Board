@@ -2,6 +2,7 @@ import {
   addBoardService,
   deleteBoardService,
   fetchBoardService,
+  updateBoardService,
 } from "../services/board.js";
 
 export const addBoardController = async (req, res) => {
@@ -32,4 +33,15 @@ export const deleteBoardController = async (req, res) => {
   await deleteBoardService(id, boardId);
 
   res.status(204).send();
+};
+export const updateBoardController = async (req, res) => {
+  const id = req.user._id;
+  const { boardId } = req.params;
+
+  const board = await updateBoardService(id, boardId, req.body);
+
+  res.status(200).json({
+    message: "Updated Successfully board",
+    data: board,
+  });
 };
