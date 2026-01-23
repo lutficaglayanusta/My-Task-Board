@@ -18,20 +18,25 @@ const startServer = () => {
       transport: {
         target: "pino-pretty",
       },
-    })
+    }),
   );
 
-  app.use(cors()); // buraya site linki ve local linki gelicek credentials true özelliği ile
+  app.use(
+    cors({
+      origin: [
+        "http://localhost:5173",
+        "https://my-task-board-frontend-alpha.vercel.app",
+      ],
+      credentials: true,
+    }),
+  );
   app.use(cookieParser());
-
 
   app.use("/api", indexRoute);
 
   app.use(notFoundHandler);
 
   app.use(errorHandler);
-
-  
 
   const PORT = Number(env("PORT", "3000"));
 
